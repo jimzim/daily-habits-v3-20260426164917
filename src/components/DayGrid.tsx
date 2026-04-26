@@ -52,6 +52,7 @@ function Cell({
     <Animated.View
       testID={testID}
       accessibilityState={{ selected: completed }}
+      aria-selected={completed}
       style={[
         styles.cell,
         today && styles.cellToday,
