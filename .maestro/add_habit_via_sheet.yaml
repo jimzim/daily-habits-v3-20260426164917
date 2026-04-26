@@ -1,0 +1,17 @@
+appId: com.dailyhabits.app
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "add-habit-fab"
+- tapOn:
+    id: "add-habit-fab"
+- tapOn:
+    id: "add-habit-input"
+- inputText: "Drink water"
+- hideKeyboard
+- tapOn:
+    id: "add-habit-save"
+- assertVisible: "Drink water"
+- assertVisible:
+    id: "habit-row-0"

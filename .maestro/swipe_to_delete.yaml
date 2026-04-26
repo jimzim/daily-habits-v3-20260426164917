@@ -1,0 +1,24 @@
+appId: com.dailyhabits.app
+---
+- launchApp:
+    clearState: true
+# Add a habit first
+- tapOn:
+    id: "add-habit-fab"
+- tapOn:
+    id: "add-habit-input"
+- inputText: "Drink water"
+- hideKeyboard
+- tapOn:
+    id: "add-habit-save"
+- assertVisible: "Drink water"
+# Swipe-left on the row using named-element swipe
+- swipe:
+    from:
+      id: "habit-row-0"
+    direction: LEFT
+- tapOn:
+    id: "habit-row-0-delete"
+- assertNotVisible: "Drink water"
+- assertVisible:
+    id: "empty-state"

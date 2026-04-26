@@ -1,0 +1,23 @@
+appId: com.dailyhabits.app
+---
+- launchApp:
+    clearState: true
+# Add a habit first
+- tapOn:
+    id: "add-habit-fab"
+- tapOn:
+    id: "add-habit-input"
+- inputText: "Drink water"
+- hideKeyboard
+- tapOn:
+    id: "add-habit-save"
+- assertVisible:
+    id: "habit-row-0"
+# Tap row to mark today complete
+- tapOn:
+    id: "habit-row-0"
+# Today cell should be selected (accessibility selected = true)
+- assertVisible:
+    id: "habit-row-0-today-cell"
+- assertVisible:
+    id: "habit-row-0"

@@ -1,0 +1,10 @@
+appId: com.dailyhabits.app
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "header-date"
+- assertVisible:
+    id: "empty-state"
+- assertVisible:
+    id: "add-habit-fab"
