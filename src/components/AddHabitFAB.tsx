@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, shadow, sizes } from '@/lib/theme';
 
@@ -13,19 +13,17 @@ export function AddHabitFAB({ onPress }: Props) {
 
   return (
     <View style={[styles.wrap, { bottom: bottomOffset }]} pointerEvents="box-none">
-      <Pressable
+      <TouchableOpacity
         onPress={onPress}
+        activeOpacity={0.85}
         accessibilityRole="button"
         accessibilityLabel="Add habit"
         testID="add-habit-fab"
         hitSlop={12}
-        style={({ pressed }) => [
-          styles.fab,
-          pressed && styles.fabPressed,
-        ]}
+        style={styles.fab}
       >
         <Ionicons name="add" size={32} color={colors.white} />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }
