@@ -6,12 +6,10 @@ appId: com.dailyhabits.app
     id: "add-habit-fab"
 - tapOn:
     id: "add-habit-fab"
-- tapOn:
+- assertVisible:
     id: "add-habit-input"
 - inputText: "Drink water"
-- hideKeyboard
-- tapOn:
-    id: "add-habit-save"
+- pressKey: Enter
 - assertVisible: "Drink water"
 - assertVisible:
     id: "habit-row-0"

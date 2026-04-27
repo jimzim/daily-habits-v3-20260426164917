@@ -2,7 +2,6 @@ import {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
   BottomSheetModal,
-  BottomSheetTextInput,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import {
@@ -13,11 +12,10 @@ import {
   useState,
 } from 'react';
 import {
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { colors, radii, spacing, type } from '@/lib/theme';
@@ -70,8 +68,8 @@ export const AddHabitSheet = forwardRef<AddHabitSheetHandle, Props>(
       <BottomSheetModal
         ref={sheetRef}
         backdropComponent={Backdrop}
-        snapPoints={['38%']}
-        keyboardBehavior="interactive"
+        snapPoints={['55%']}
+        keyboardBehavior="extend"
         keyboardBlurBehavior="restore"
         android_keyboardInputMode="adjustResize"
         backgroundStyle={styles.sheetBg}
@@ -79,60 +77,56 @@ export const AddHabitSheet = forwardRef<AddHabitSheetHandle, Props>(
         enableDynamicSizing={false}
       >
         <BottomSheetView style={styles.body}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            style={styles.kav}
-          >
-            <Text style={styles.heading}>Add habit</Text>
-            <BottomSheetTextInput
+          <Text style={styles.heading}>Add habit</Text>
+          <View testID="add-habit-input" accessibilityLabel="add-habit-input">
+            <TextInput
               autoFocus
               value={value}
               onChangeText={setValue}
               placeholder="e.g. Drink water"
               placeholderTextColor={colors.textDim}
               style={styles.input}
-              testID="add-habit-input"
               returnKeyType="done"
               onSubmitEditing={handleSave}
               maxLength={80}
             />
-            <View style={styles.actions}>
-              <Pressable
-                onPress={() => sheetRef.current?.dismiss()}
-                accessibilityRole="button"
-                testID="add-habit-cancel"
-                style={({ pressed }) => [
-                  styles.btn,
-                  styles.cancelBtn,
-                  pressed && styles.btnPressed,
+          </View>
+          <View style={styles.actions}>
+            <Pressable
+              onPress={() => sheetRef.current?.dismiss()}
+              accessibilityRole="button"
+              testID="add-habit-cancel"
+              style={({ pressed }) => [
+                styles.btn,
+                styles.cancelBtn,
+                pressed && styles.btnPressed,
+              ]}
+            >
+              <Text style={styles.cancelLabel}>Cancel</Text>
+            </Pressable>
+            <Pressable
+              onPress={handleSave}
+              disabled={!canSave}
+              accessibilityRole="button"
+              accessibilityState={{ disabled: !canSave }}
+              testID="add-habit-save"
+              style={({ pressed }) => [
+                styles.btn,
+                styles.saveBtn,
+                !canSave && styles.saveBtnDisabled,
+                pressed && canSave && styles.btnPressed,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.saveLabel,
+                  !canSave && styles.saveLabelDisabled,
                 ]}
               >
-                <Text style={styles.cancelLabel}>Cancel</Text>
-              </Pressable>
-              <Pressable
-                onPress={handleSave}
-                disabled={!canSave}
-                accessibilityRole="button"
-                accessibilityState={{ disabled: !canSave }}
-                testID="add-habit-save"
-                style={({ pressed }) => [
-                  styles.btn,
-                  styles.saveBtn,
-                  !canSave && styles.saveBtnDisabled,
-                  pressed && canSave && styles.btnPressed,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.saveLabel,
-                    !canSave && styles.saveLabelDisabled,
-                  ]}
-                >
-                  Save
-                </Text>
-              </Pressable>
-            </View>
-          </KeyboardAvoidingView>
+                Save
+              </Text>
+            </Pressable>
+          </View>
         </BottomSheetView>
       </BottomSheetModal>
     );
@@ -153,9 +147,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.sm,
-  },
-  kav: {
-    flex: 1,
   },
   heading: {
     ...type.title,

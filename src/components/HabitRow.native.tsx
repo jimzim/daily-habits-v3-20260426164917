@@ -32,12 +32,12 @@ const RIGHT_ACTION_WIDTH = 96;
 function RightActions({
   progress,
   swipeable,
-  habitId,
+  rowIndex,
   onConfirm,
 }: {
   progress: SharedValue<number>;
   swipeable: React.RefObject<SwipeableMethods | null>;
-  habitId: string;
+  rowIndex: number;
   onConfirm: () => void;
 }) {
   const animatedStyle = useAnimatedStyle(() => {
@@ -54,7 +54,7 @@ function RightActions({
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Delete habit"
-        testID={`habit-row-${habitId}-delete`}
+        testID={`habit-row-${rowIndex}-delete`}
         style={styles.actionPressable}
         onPress={() => {
           swipeable.current?.close();
@@ -121,7 +121,7 @@ export function HabitRow({ habit, index, completed, onToggle, onDelete }: Props)
         <RightActions
           progress={progress}
           swipeable={swipeRef}
-          habitId={habit.id}
+          rowIndex={index}
           onConfirm={handleDelete}
         />
       )}
